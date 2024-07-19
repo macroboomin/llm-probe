@@ -51,7 +51,7 @@ for index, row in tqdm(Biz_Ethics.iterrows(), total=Biz_Ethics.shape[0], desc="P
     messages.pop()
     messages.pop()
     messages.append(vanilla)
-    messages.append({"role": "user", "content":f"Question: {row['question']}"})
+    messages.append({"role": "user", "content":f"Question: {Biz_Ethics.loc[index]['question']}\nOptions: 1. {Biz_Ethics.loc[index]['choices'][0]}\n2. {Biz_Ethics.loc[index]['choices'][1]}\n3. {Biz_Ethics.loc[0]['choices'][2]}\n4. {Biz_Ethics.loc[index]['choices'][3]}"})
     
     gen_answer, confidence = extract_answer_and_confidence(Phi3ChatCompletion(messages))
     if gen_answer == 0 and confidence == 0: continue
@@ -111,7 +111,7 @@ for index, row in tqdm(Prf_Law.iterrows(), total=Prf_Law.shape[0], desc="Process
     messages.pop()
     messages.pop()
     messages.append(vanilla)
-    messages.append({"role": "user", "content":f"Question: {row['question']}"})
+    messages.append({"role": "user", "content":f"Question: {Prf_Law.loc[index]['question']}\nOptions: 1. {Prf_Law.loc[index]['choices'][0]}\n2. {Prf_Law.loc[index]['choices'][1]}\n3. {Prf_Law.loc[index]['choices'][2]}\n4. {Prf_Law.loc[index]['choices'][3]}"})
     
     gen_answer, confidence = extract_answer_and_confidence(Phi3ChatCompletion(messages))
     if gen_answer == 0 and confidence == 0: continue

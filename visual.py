@@ -42,7 +42,7 @@ def plot_confidence_graphs(df, dataset_name):
     plt.plot([0, 100], [0, 1], 'k--', lw=2)
     
     plt.xlabel('Confidence')
-    plt.xticks(np.linspace(0, 100, 6), labels = np.linspace(0.0, 1.0, 6))
+    plt.xticks(np.linspace(0, 100, 6), labels = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
     plt.ylabel('Accuracy Within Bin')
     plt.title(f'Confidence-Accuracy Within Bin for {dataset_name}')
     plt.grid(axis='y')

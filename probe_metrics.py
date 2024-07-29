@@ -79,7 +79,7 @@ results = pd.DataFrame({
     'College Mathematics': metrics_col_math,
     'Business Ethics': metrics_biz_ethics,
     'Professional Law': metrics_prf_law,
-    'Weighted Average': [avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy]
+    'Average': [avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy]
 })
 
 results.to_csv('./probe_results/probe_metrics.csv', index=False)
@@ -92,5 +92,5 @@ print(metrics_biz_ethics)
 print("Professional Law Probe Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
 print(metrics_prf_law)
 
-print("\nWeighted Average Probe Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
+print("\nAverage Probe Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
 print(avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy)

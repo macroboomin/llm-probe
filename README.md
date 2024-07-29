@@ -14,14 +14,14 @@ Applying Probe to LLM
 
 ### Verbalized Confidence
 - `vanilla_prompt.py`: 모델에게 vanilla prompt를 주어 output을 csv 파일로 verbalized_results에 저장
-- `verblalized_metrics.py`: verbalized_results에 있는 저장한 csv 파일로부터 ECE, AUROC, AUPRC-Positive, AUPRC-Negative 도출
-- `verbalized_visual.py`: verbalized_results에 있는 저장한 csv 파일로부터 confidence-count, confidence-accuracy 그래프 도출
+- `verblalized_metrics.py`: verbalized_results의 저장한 csv 파일로부터 ECE, AUROC, AUPRC-Positive, AUPRC-Negative 도출
+- `verbalized_visual.py`: verbalized_results의 저장한 csv 파일로부터 confidence-count, confidence-accuracy 그래프 도출
 
 ### Probe
 - `probe.py`: probe 모델을 정의하고 data 폴더에 있는 데이터들로 neural network 학습 진행 후 'probe_mode.pth'로 저장
 - `probe_prompt.py`: 'probe_mode.pth'을 load한 이후 모델에게 prompt를 주어 ouput을 얻고, 불러온 모델을 이용하여 output이 correct할 확률 계산하여 probe_results에 저장
-- `probe_metrics`: probe_results에 있는 저장한 csv 파일로부터 ECE, AUROC, AUPRC-Positive, AUPRC-Negative 도출
-- `probe_visual`: probe_results에 있는 저장한 csv 파일로부터 confidence-count, confidence-accuracy 그래프 도출
+- `probe_metrics`: probe_results의 저장한 csv 파일로부터 ECE, AUROC, AUPRC-Positive, AUPRC-Negative 도출
+- `probe_visual`: probe_results의 저장한 csv 파일로부터 confidence-count, confidence-accuracy 그래프 도출
 
 ### utils
 - `func.py`: 유틸로 사용 가능한 함수들을 저장 (e.g. extract_answer_and_confidence)

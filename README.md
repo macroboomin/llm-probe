@@ -18,7 +18,7 @@ Applying Probe to LLM
 - `verbalized_visual.py`: verbalized_results에 있는 저장한 csv 파일로부터 confidence-count, confidence-accuracy 그래프 도출
 
 ### Probe
-- `probe.py`: probe 모델을 정의하고 data 폴더에 있는 데이터들로 neural network training 진행 후 'probe_mode.pth'로 저장
+- `probe.py`: probe 모델을 정의하고 data 폴더에 있는 데이터들로 neural network 학습 진행 후 'probe_mode.pth'로 저장
 - `probe_prompt.py`: 'probe_mode.pth'을 load한 이후 모델에게 prompt를 주어 ouput을 얻고, 불러온 모델을 이용하여 output이 correct할 확률 계산하여 probe_results에 저장
 - `probe_metrics`: probe_results에 있는 저장한 csv 파일로부터 ECE, AUROC, AUPRC-Positive, AUPRC-Negative 도출
 - `probe_visual`: probe_results에 있는 저장한 csv 파일로부터 confidence-count, confidence-accuracy 그래프 도출

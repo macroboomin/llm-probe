@@ -47,7 +47,7 @@ sh 폴더의 probe.sh로 한 번에 실행 가능
 ## Dataset
 
 ### Probe Training
-+ Azaria and Mitchell의 "[The Internal State of an LLM Knows When It's Lying.](https://arxiv.org/abs/2304.13734)" 논문에서 직접 배포한 데이터셋([https://azariaa.com/Content/Datasets/true-false-dataset.zip.](https://azariaa.com/Content/Datasets/true-false-dataset.zip.))을 이용하여 Probe model training 하였음. Neural Network 아키텍쳐는 논문의 것과 동일하게 구성.
++ Azaria and Mitchell의 "[The Internal State of an LLM Knows When It's Lying.](https://arxiv.org/abs/2304.13734)" 논문에서 직접 배포한 데이터셋([azariaa.com/Content/Datasets/true-false-dataset.zip](azariaa.com/Content/Datasets/true-false-dataset.zip))을 이용하여 Probe model training 하였음. Neural Network 아키텍쳐는 논문의 것과 동일하게 구성.
 
 ### Experiments
 open-number나 open-ended 질문에 대하여서는 너무 낮은 수치의 accuracy가 나와서 모두 multiple choice 질문에 대하여서만 진행

@@ -1,9 +1,9 @@
 import pandas as pd
 
 # Load the CSV files
-biz_ethics = pd.read_csv('./data/Biz_Ethics_processed.csv')
-gsm8k = pd.read_csv('./data/GSM8K_processed.csv')
-prf_law = pd.read_csv('./data/Prf_Law_processed.csv')
+col_math = pd.read_csv('./probe_results/col_math.csv')
+biz_ethics = pd.read_csv('./probe_results/biz_ethics.csv')
+prf_law = pd.read_csv('./probe_results/prf_law.csv')
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,8 +13,8 @@ def plot_confidence_graphs(df, dataset_name):
     
     # Confidence-Count Graph
     plt.figure(figsize=(10, 5))
-    incorrect_counts, _ = np.histogram(df[df['correct'] == 0]['confidence'], bins=bins)
-    correct_counts, _ = np.histogram(df[df['correct'] == 1]['confidence'], bins=bins)
+    incorrect_counts, _ = np.histogram(df[df['correct'] == 0]['probe'], bins=bins)
+    correct_counts, _ = np.histogram(df[df['correct'] == 1]['probe'], bins=bins)
     
     bin_centers = 0.5 * (bins[:-1] + bins[1:])
     bar_width = bins[1] - bins[0]
@@ -24,15 +24,15 @@ def plot_confidence_graphs(df, dataset_name):
     
     plt.xlabel('Confidence (%)')
     plt.ylabel('Count')
-    plt.title(f'Confidence-Count Graph for {dataset_name}')
+    plt.title(f'Confidence-Count Graph for {dataset_name} with Probe')
     plt.legend(loc='upper left')
     plt.grid(axis='y')
-    plt.savefig(f'./graph/{dataset_name}_confidence_count.png')
+    plt.savefig(f'./probe_graph/{dataset_name}_probe_confidence_count.png')
     plt.show()
     
     # Confidence-Accuracy Within Bin Graph
     plt.figure(figsize=(10, 5))
-    bin_indices = np.digitize(df['confidence'], bins) - 1
+    bin_indices = np.digitize(df['probe'], bins) - 1
     accuracy_within_bins = [
         df[(bin_indices == i)]['correct'].mean() if (bin_indices == i).sum() > 0 else np.nan
         for i in range(len(bins) - 1)
@@ -44,11 +44,11 @@ def plot_confidence_graphs(df, dataset_name):
     plt.xlabel('Confidence')
     plt.xticks(np.linspace(0, 100, 6), labels = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
     plt.ylabel('Accuracy Within Bin')
-    plt.title(f'Confidence-Accuracy Within Bin for {dataset_name}')
+    plt.title(f'Confidence-Accuracy Within Bin for {dataset_name} with Probe')
     plt.grid(axis='y')
-    plt.savefig(f'./graph/{dataset_name}_confidence_accuracy.png')
+    plt.savefig(f'./probe_graph/{dataset_name}_probe_confidence_accuracy.png')
     plt.show()
 
-plot_confidence_graphs(gsm8k, 'GSM8K')
+plot_confidence_graphs(col_math, 'Col_Math')
 plot_confidence_graphs(biz_ethics, 'Biz_Ethics')
 plot_confidence_graphs(prf_law, 'Prf_Law')

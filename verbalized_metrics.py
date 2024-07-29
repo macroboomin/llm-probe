@@ -34,6 +34,10 @@ def compute_metrics(df):
         precision, recall, _ = precision_recall_curve(1 - df['correct'], df['confidence'])
         return auc(recall, precision)
 
+    # Accuracy
+    def compute_accuracy(df):
+        return df['correct'].mean()
+
     # Normalize confidence for ECE calculation
     df['confidence_normalized'] = df['confidence'] / 100
 
@@ -41,32 +45,43 @@ def compute_metrics(df):
     auroc = compute_auroc(df) * 100
     pr_p = compute_pr_p(df) * 100
     pr_n = compute_pr_n(df) * 100
+    accuracy = compute_accuracy(df) * 100
 
-    return round(ece, 1), round(auroc, 1), round(pr_p, 1), round(pr_n, 1)
+    return round(ece, 1), round(auroc, 1), round(pr_p, 1), round(pr_n, 1), round(accuracy, 1)
 
 # Load the CSV files
-biz_ethics = pd.read_csv('./data/Biz_Ethics_processed.csv')
-gsm8k = pd.read_csv('./data/GSM8K_processed.csv')
-prf_law = pd.read_csv('./data/Prf_Law_processed.csv')
+col_math = pd.read_csv('./verbalized_results/Col_Math_processed.csv')
+biz_ethics = pd.read_csv('./verbalized_results/Biz_Ethics_processed.csv')
+prf_law = pd.read_csv('./verbalized_results/Prf_Law_processed.csv')
 
 # Compute metrics for each dataset
-metrics_gsm8k = compute_metrics(gsm8k)
+metrics_col_math = compute_metrics(col_math)
 metrics_biz_ethics = compute_metrics(biz_ethics)
 metrics_prf_law = compute_metrics(prf_law)
 
 # Calculate average metrics
-avg_ece = round(np.mean([metrics_gsm8k[0], metrics_biz_ethics[0], metrics_prf_law[0]]), 1)
-avg_auroc = round(np.mean([metrics_gsm8k[1], metrics_biz_ethics[1], metrics_prf_law[1]]), 1)
-avg_pr_p = round(np.mean([metrics_gsm8k[2], metrics_biz_ethics[2], metrics_prf_law[2]]), 1)
-avg_pr_n = round(np.mean([metrics_gsm8k[3], metrics_biz_ethics[3], metrics_prf_law[3]]), 1)
+avg_ece = round(np.mean([metrics_col_math[0], metrics_biz_ethics[0], metrics_prf_law[0]]), 1)
+avg_auroc = round(np.mean([metrics_col_math[1], metrics_biz_ethics[1], metrics_prf_law[1]]), 1)
+avg_pr_p = round(np.mean([metrics_col_math[2], metrics_biz_ethics[2], metrics_prf_law[2]]), 1)
+avg_pr_n = round(np.mean([metrics_col_math[3], metrics_biz_ethics[3], metrics_prf_law[3]]), 1)
+avg_accuracy = round(np.mean([metrics_col_math[4], metrics_biz_ethics[4], metrics_prf_law[4]]), 1)
+
+results = pd.DataFrame({
+    'Metric': ['ECE', 'AUROC', 'PR-P', 'PR-N', 'Accuracy'],
+    'College Mathematics': metrics_col_math,
+    'Business Ethics': metrics_biz_ethics,
+    'Professional Law': metrics_prf_law,
+    'Average': [avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy]
+})
+results.to_csv('./verbalized_results/verbalized_metrics.csv', index=False)
 
 # Output metrics
-print("GSM8K Metrics: ECE, AUROC, PR-P, PR-N")
-print(metrics_gsm8k)
-print("Business Ethics Metrics: ECE, AUROC, PR-P, PR-N")
+print("College Mathematics Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
+print(metrics_col_math)
+print("Business Ethics Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
 print(metrics_biz_ethics)
-print("Professional Law Metrics: ECE, AUROC, PR-P, PR-N")
+print("Professional Law Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
 print(metrics_prf_law)
 
-print("\nAverage Metrics: ECE, AUROC, PR-P, PR-N")
-print(avg_ece, avg_auroc, avg_pr_p, avg_pr_n)
+print("\nAverage Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
+print(avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy)

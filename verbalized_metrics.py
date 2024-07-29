@@ -59,20 +59,29 @@ metrics_col_math = compute_metrics(col_math)
 metrics_biz_ethics = compute_metrics(biz_ethics)
 metrics_prf_law = compute_metrics(prf_law)
 
-# Calculate average metrics
-avg_ece = round(np.mean([metrics_col_math[0], metrics_biz_ethics[0], metrics_prf_law[0]]), 1)
-avg_auroc = round(np.mean([metrics_col_math[1], metrics_biz_ethics[1], metrics_prf_law[1]]), 1)
-avg_pr_p = round(np.mean([metrics_col_math[2], metrics_biz_ethics[2], metrics_prf_law[2]]), 1)
-avg_pr_n = round(np.mean([metrics_col_math[3], metrics_biz_ethics[3], metrics_prf_law[3]]), 1)
-avg_accuracy = round(np.mean([metrics_col_math[4], metrics_biz_ethics[4], metrics_prf_law[4]]), 1)
+# Calculate the number of rows in each dataset
+num_rows_col_math = len(col_math)
+num_rows_biz_ethics = len(biz_ethics)
+num_rows_prf_law = len(prf_law)
+
+# Calculate total number of rows
+total_rows = num_rows_col_math + num_rows_biz_ethics + num_rows_prf_law
+
+# Calculate weighted average metrics
+avg_ece = round((metrics_col_math[0] * num_rows_col_math + metrics_biz_ethics[0] * num_rows_biz_ethics + metrics_prf_law[0] * num_rows_prf_law) / total_rows, 1)
+avg_auroc = round((metrics_col_math[1] * num_rows_col_math + metrics_biz_ethics[1] * num_rows_biz_ethics + metrics_prf_law[1] * num_rows_prf_law) / total_rows, 1)
+avg_pr_p = round((metrics_col_math[2] * num_rows_col_math + metrics_biz_ethics[2] * num_rows_biz_ethics + metrics_prf_law[2] * num_rows_prf_law) / total_rows, 1)
+avg_pr_n = round((metrics_col_math[3] * num_rows_col_math + metrics_biz_ethics[3] * num_rows_biz_ethics + metrics_prf_law[3] * num_rows_prf_law) / total_rows, 1)
+avg_accuracy = round((metrics_col_math[4] * num_rows_col_math + metrics_biz_ethics[4] * num_rows_biz_ethics + metrics_prf_law[4] * num_rows_prf_law) / total_rows, 1)
 
 results = pd.DataFrame({
     'Metric': ['ECE', 'AUROC', 'PR-P', 'PR-N', 'Accuracy'],
     'College Mathematics': metrics_col_math,
     'Business Ethics': metrics_biz_ethics,
     'Professional Law': metrics_prf_law,
-    'Average': [avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy]
+    'Weighted Average': [avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy]
 })
+
 results.to_csv('./verbalized_results/verbalized_metrics.csv', index=False)
 
 # Output metrics
@@ -83,5 +92,5 @@ print(metrics_biz_ethics)
 print("Professional Law Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
 print(metrics_prf_law)
 
-print("\nAverage Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
+print("\nWeighted Average Metrics: ECE, AUROC, PR-P, PR-N, Accuracy")
 print(avg_ece, avg_auroc, avg_pr_p, avg_pr_n, avg_accuracy)
